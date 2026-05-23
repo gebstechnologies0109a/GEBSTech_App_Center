@@ -50,6 +50,8 @@ This calls `POST …/sites/3209532/git` and triggers a deploy.
 
 Deploy script in Forge should match `forge-deploy.sh` (composer, npm build, migrate, seed, optimize).
 
+If the Forge UI script is missing `git pull origin main`, `composer.json` runs `git pull origin main` in `pre-install-cmd` before `composer install` during deploy.
+
 ## Environment (`.env`)
 
 Copy from `forge.env.production.example` and set `APP_KEY` plus `DB_PASSWORD`.
