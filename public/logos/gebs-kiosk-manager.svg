@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="GEBS Kiosk Manager">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1d4ed8"/>
+      <stop offset="100%" style="stop-color:#0f1c2e"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="48" fill="url(#bg)"/>
+  <rect x="88" y="48" width="80" height="128" rx="8" fill="rgba(255,255,255,.12)" stroke="#22d3ee" stroke-width="3"/>
+  <rect x="104" y="64" width="48" height="72" rx="4" fill="#0f1c2e"/>
+  <rect x="108" y="184" width="40" height="8" rx="2" fill="#c9a227"/>
+  <circle cx="176" cy="80" r="16" fill="#22d3ee" opacity=".8"/>
+</svg>
