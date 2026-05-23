@@ -1,8 +1,22 @@
 # Forge deployment — GEBSTech App Center
 
 **URL:** https://apps.diybizrewards.com  
+**Forge site ID:** `3209532` on server `1205324` (`188.166.230.4`)  
 **Web directory:** `/public`  
 **PHP:** 8.3+ (server may run 8.4) · **Database:** MySQL/MariaDB · **SSL:** Let's Encrypt
+
+## DNS required (fix NXDOMAIN first)
+
+`apps.diybizrewards.com` must resolve before the site loads in a browser.
+
+| Type | Name | Value |
+|------|------|--------|
+| **A** | `apps` | `188.166.230.4` |
+
+Add at **Squarespace Domains** → `diybizrewards.com` → DNS (same place as `api`, `portal`, `frosty`).  
+Details: [docs/dns-apps-diybizrewards.md](docs/dns-apps-diybizrewards.md)
+
+After propagation: Forge → **Domains** → **Let's Encrypt**, then open `/app-center`.
 
 ## Environment (`.env`)
 
