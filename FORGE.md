@@ -5,18 +5,50 @@
 **Web directory:** `/public`  
 **PHP:** 8.3+ (server may run 8.4) · **Database:** MySQL/MariaDB · **SSL:** Let's Encrypt
 
-## DNS required (fix NXDOMAIN first)
-
-`apps.diybizrewards.com` must resolve before the site loads in a browser.
+## DNS & SSL (live)
 
 | Type | Name | Value |
 |------|------|--------|
 | **A** | `apps` | `188.166.230.4` |
 
-Add at **Squarespace Domains** → `diybizrewards.com` → DNS (same place as `api`, `portal`, `frosty`).  
-Details: [docs/dns-apps-diybizrewards.md](docs/dns-apps-diybizrewards.md)
+Manage in **Shopify** → Domains → `diybizrewards.com` → DNS (see [docs/dns-apps-diybizrewards.md](docs/dns-apps-diybizrewards.md)).
 
-After propagation: Forge → **Domains** → **Let's Encrypt**, then open `/app-center`.
+**Site:** https://forge.laravel.com/gebs-6l1/diybizrewards/3209532
+
+## GitHub → Forge (push to deploy)
+
+This site was created **without** a Forge-linked repository (no **Git** section in Forge Settings). Code on the server already tracks:
+
+`gebstechnologies0109a/GEBSTech_App_Center` @ `main`
+
+### Option A — Forge API (links Git + webhook)
+
+1. Forge → profile menu → **API** → copy a token (or create one with `site:manage-project`).
+2. In PowerShell:
+
+```powershell
+$env:FORGE_API_TOKEN = 'paste-token-here'
+.\scripts\forge-setup-apps.ps1
+```
+
+This calls `POST …/sites/3209532/git` and triggers a deploy.
+
+### Option B — Deploy hook webhook
+
+1. Forge → [Deployments settings](https://forge.laravel.com/gebs-6l1/diybizrewards/3209532/settings/deployments) → copy the full **Deploy hook** URL.
+2. GitHub → **GEBSTech_App_Center** → **Settings → Webhooks → Add webhook**
+   - Payload URL: deploy hook URL
+   - Content type: `application/json`
+   - Events: **Just the push event**
+
+(GitHub may ask for email verification before saving webhooks.)
+
+### Option C — GitHub Actions
+
+1. Add repo secret **`FORGE_DEPLOY_HOOK`** = full deploy hook URL from Forge.
+2. Workflow `.github/workflows/forge-deploy.yml` runs on every push to `main`.
+
+Deploy script in Forge should match `forge-deploy.sh` (composer, npm build, migrate, seed, optimize).
 
 ## Environment (`.env`)
 
