@@ -22,6 +22,13 @@ Public app marketplace for **GEBS Technologies**.
 | `download_link` | string, nullable |
 | `status` | `active` \| `inactive` |
 
+## Paths
+
+| | Path |
+|--|------|
+| **Local (Windows)** | `C:\laragon\www\GEBSTech_Apps` |
+| **Production server** | `/home/forge/apps.diybizrewards.com` |
+
 ## Local setup
 
 ```bash

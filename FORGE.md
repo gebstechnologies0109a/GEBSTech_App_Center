@@ -1,116 +1,83 @@
 # Forge deployment — GEBSTech App Center
 
-**URL:** https://apps.diybizrewards.com  
-**Forge site ID:** `3209532` on server `1205324` (`188.166.230.4`)  
-**Web directory:** `/public`  
-**PHP:** 8.3+ (server may run 8.4) · **Database:** MySQL/MariaDB · **SSL:** Let's Encrypt
+| | |
+|--|--|
+| **URL** | https://apps.diybizrewards.com |
+| **Forge site** | [3209532](https://forge.laravel.com/gebs-6l1/diybizrewards/3209532) on server `1205324` (`188.166.230.4`) |
+| **Server path** | `/home/forge/apps.diybizrewards.com` |
+| **Web root** | `/public` |
+| **GitHub** | `gebstechnologies0109a/GEBSTech_App_Center` @ `main` |
 
-## DNS & SSL (live)
+## DNS (live)
 
 | Type | Name | Value |
 |------|------|--------|
 | **A** | `apps` | `188.166.230.4` |
 
-Manage in **Shopify** → Domains → `diybizrewards.com` → DNS (see [docs/dns-apps-diybizrewards.md](docs/dns-apps-diybizrewards.md)).
+Details: [docs/dns-apps-diybizrewards.md](docs/dns-apps-diybizrewards.md)
 
-**Site:** https://forge.laravel.com/gebs-6l1/diybizrewards/3209532
+## Push to deploy
 
-## GitHub → Forge (push to deploy)
+Push to **`main`** → Forge runs the deploy script (Git linked on the site).
 
-This site was created **without** a Forge-linked repository (no **Git** section in Forge Settings). Code on the server already tracks:
+Optional GitHub Actions workflow (`.github/workflows/forge-deploy.yml`) POSTs the Forge deploy hook if repo secret **`FORGE_DEPLOY_HOOK`** is set; otherwise the job skips (green).
 
-`gebstechnologies0109a/GEBSTech_App_Center` @ `main`
-
-### Option A — Forge API (links Git + webhook)
-
-1. Forge → profile menu → **API** → copy a token (or create one with `site:manage-project`).
-2. In PowerShell:
+## One-time Forge API setup (local PC)
 
 ```powershell
-$env:FORGE_API_TOKEN = 'paste-token-here'
-.\scripts\forge-setup-apps.ps1
+cd C:\laragon\www\GEBSTech_Apps
+.\scripts\forge-configure-apps.ps1 -Token 'eyJ...'
 ```
 
-This calls `POST …/sites/3209532/git` and triggers a deploy.
+Or: `.\scripts\set-forge-token.ps1 -Token 'eyJ...'` then `forge-update-deploy-script.ps1` and `forge-setup-apps.ps1`.
 
-### Option B — Deploy hook webhook
+## Deploy script
 
-1. Forge → [Deployments settings](https://forge.laravel.com/gebs-6l1/diybizrewards/3209532/settings/deployments) → copy the full **Deploy hook** URL.
-2. GitHub → **GEBSTech_App_Center** → **Settings → Webhooks → Add webhook**
-   - Payload URL: deploy hook URL
-   - Content type: `application/json`
-   - Events: **Just the push event**
-
-(GitHub may ask for email verification before saving webhooks.)
-
-### Option C — GitHub Actions (optional)
-
-If Forge **Git** is linked (Option A), pushes already deploy; Actions are not required.
-
-To use the workflow anyway:
-
-1. Add repo secret **`FORGE_DEPLOY_HOOK`** = full deploy hook URL from Forge.
-2. `.github/workflows/forge-deploy.yml` POSTs that URL on every push to `main`.
-
-Without the secret, the workflow **skips** (green) so Actions does not show false failures.
-
-Deploy script in Forge should match `forge-deploy.sh` (composer, npm build, migrate, seed, optimize).
-
-If the Forge UI script is missing `git pull origin main`, `composer.json` runs `git pull origin main` in `pre-install-cmd` before `composer install` during deploy.
-
-## Environment (`.env`)
-
-Copy from `forge.env.production.example` and set `APP_KEY` plus `DB_PASSWORD`.
-
-```env
-APP_NAME="GEBSTech App Center"
-APP_ENV=production
-APP_DEBUG=false
-APP_URL=https://apps.diybizrewards.com
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=gebstech_app_center
-DB_USERNAME=forge
-DB_PASSWORD=xxxx
-
-GEBS_FRAME_ANCESTORS=https://api.diybizrewards.com https://portal.diybizrewards.com https://frosty.diybizrewards.com https://diybizrewards.com https://www.diybizrewards.com
-```
-
-## Deploy script (Forge)
-
-Paste `forge-deploy.sh` or:
+Use `forge-deploy.sh` in Forge **Settings → Deployments** (or the API script updater):
 
 ```bash
 cd $FORGE_SITE_PATH
-
 git pull origin main
-
-composer install --no-interaction --prefer-dist --optimize-autoloader
-
+composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 npm ci
 npm run build
-
 php artisan migrate --force
 php artisan db:seed --class=AppItemSeeder --force
 php artisan optimize
 ```
 
-## DNS
+On Forge only, `composer.json` runs `scripts/composer-forge-git-pull.php` before install (when `FORGE_SITE_PATH` is set).
 
-| Type | Name | Value |
-|------|------|--------|
-| A | `apps` | Your Forge server IP |
+## Production `.env` (Forge)
 
-## Embed (iframe)
+Copy from `forge.env.production.example`. Required:
+
+- **`APP_KEY`** — run `php artisan key:generate --force` once if empty
+- **`DB_PASSWORD`**
+- **`GEBS_FRAME_ANCESTORS`** — must be **quoted** (spaces):
+
+```env
+GEBS_FRAME_ANCESTORS="https://api.diybizrewards.com https://portal.diybizrewards.com https://frosty.diybizrewards.com https://diybizrewards.com https://www.diybizrewards.com"
+```
+
+Fix on server if needed: `bash scripts/fix-server-env-frame-ancestors.sh`
+
+## Manual deploy (SSH)
+
+```bash
+ssh forge@188.166.230.4
+cd /home/forge/apps.diybizrewards.com
+bash forge-deploy.sh
+```
+
+## Embed
 
 ```html
 <iframe
-  src="https://apps.diybizrewards.com/app-center"
+  src="https://apps.diybizrewards.com/app-center?embed=1"
   title="GEBSTech App Center"
   style="width:100%; height:100vh; border:none;"
 ></iframe>
 ```
 
-Allowed parent origins: `GEBS_FRAME_ANCESTORS` in `.env`.
+Allowed parents: `GEBS_FRAME_ANCESTORS` in `.env`.

@@ -32,7 +32,7 @@
     },
     "scripts": {
         "pre-install-cmd": [
-            "git pull origin main"
+            "@php scripts/composer-forge-git-pull.php"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
