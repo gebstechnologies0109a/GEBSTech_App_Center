@@ -77,6 +77,8 @@ Paste `forge-deploy.sh` or:
 ```bash
 cd $FORGE_SITE_PATH
 
+git pull origin main
+
 composer install --no-interaction --prefer-dist --optimize-autoloader
 
 npm ci
