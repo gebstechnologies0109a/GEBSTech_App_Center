@@ -43,10 +43,16 @@ This calls `POST …/sites/3209532/git` and triggers a deploy.
 
 (GitHub may ask for email verification before saving webhooks.)
 
-### Option C — GitHub Actions
+### Option C — GitHub Actions (optional)
+
+If Forge **Git** is linked (Option A), pushes already deploy; Actions are not required.
+
+To use the workflow anyway:
 
 1. Add repo secret **`FORGE_DEPLOY_HOOK`** = full deploy hook URL from Forge.
-2. Workflow `.github/workflows/forge-deploy.yml` runs on every push to `main`.
+2. `.github/workflows/forge-deploy.yml` POSTs that URL on every push to `main`.
+
+Without the secret, the workflow **skips** (green) so Actions does not show false failures.
 
 Deploy script in Forge should match `forge-deploy.sh` (composer, npm build, migrate, seed, optimize).
 

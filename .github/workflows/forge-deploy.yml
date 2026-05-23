@@ -1,5 +1,8 @@
 name: Deploy to Forge
 
+# Optional: set repo secret FORGE_DEPLOY_HOOK to the Forge deploy hook URL.
+# If unset, this job succeeds without doing anything (Forge Git push deploy is enough).
+
 on:
   push:
     branches: [main]
@@ -9,4 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Forge deployment
-        run: curl -fsS -X POST "${{ secrets.FORGE_DEPLOY_HOOK }}"
+        env:
+          FORGE_DEPLOY_HOOK: ${{ secrets.FORGE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$FORGE_DEPLOY_HOOK" ]; then
+            echo "FORGE_DEPLOY_HOOK not set — skipping (use Forge Git deploy or add the secret)."
+            exit 0
+          fi
+          curl -fsS -X POST "$FORGE_DEPLOY_HOOK"
