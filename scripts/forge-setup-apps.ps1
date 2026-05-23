@@ -29,7 +29,7 @@ $apiBase = 'https://forge.laravel.com/api/v1'
 
 function Get-ForgeHeaders {
     if (-not $env:FORGE_API_TOKEN) {
-        throw 'Set FORGE_API_TOKEN (Forge → Account → API). DNS must point apps to 188.166.230.4 first for SSL.'
+        throw 'Set FORGE_API_TOKEN first. Run: .\scripts\set-forge-token.ps1'
     }
     @{
         Authorization = "Bearer $($env:FORGE_API_TOKEN)"
