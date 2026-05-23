@@ -2,7 +2,12 @@
 
 The App Center returns **DNS_PROBE_FINISHED_NXDOMAIN** until this record exists.
 
-DNS for `diybizrewards.com` is on **Google Cloud DNS** (nameservers `ns-cloud-d1.googledomains.com` … `d4`). Manage it in **Squarespace Domains** (Google Domains migrated there).
+DNS for `diybizrewards.com` uses **Google Cloud DNS** nameservers (`ns-cloud-d1.googledomains.com` … `d4`). Subdomains like `api`, `portal`, and `frosty` already point to `188.166.230.4`; **`apps` is missing**.
+
+Manage DNS in the **same place you added `api` and `portal`** — typically:
+
+1. **[Google Cloud Console → Cloud DNS](https://console.cloud.google.com/net-services/dns/zones)** (project that hosts the `diybizrewards.com` zone), **or**
+2. The Google / Squarespace account that still owns the domain registration (not every Squarespace login lists domains; use the account that registered `diybizrewards.com`).
 
 ## Add this record
 
