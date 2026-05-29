@@ -9,6 +9,8 @@ class AppItemSeeder extends Seeder
 {
     public function run(): void
     {
+        AppItem::query()->where('slug', 'insapos-system')->delete();
+
         $apps = [
             [
                 'name' => 'FrostySystem',
@@ -32,9 +34,27 @@ class AppItemSeeder extends Seeder
                 'name' => 'DIY-Biz-Rewards',
                 'slug' => 'diy-biz-rewards',
                 'category' => 'Loyalty & Engagement',
-                'description' => "Member rewards, referrals, and premium engagement for your brand.\n\n- Branded member portals and referral programs\n- Points, tiers, and redemption rules\n- Premium DIY Biz design system out of the box\n- Embeddable widgets for partner sites",
+                'description' => "Member rewards hub fully connected to in-store POS and Maya Business financial services.\n\n- Branded member app and web portal with points, tiers, and referrals\n- Every in-store purchase tagged via INSA POS syncs to the member account\n- One-tap ePayPlus access for bills, cash-in, load, and RFID inside the app\n- Embeddable widgets and partner-ready loyalty workflows",
                 'logo_path' => 'logos/diy-biz-rewards.svg',
                 'download_link' => 'https://portal.diybizrewards.com',
+                'status' => AppItem::STATUS_ACTIVE,
+            ],
+            [
+                'name' => 'INSA POS',
+                'slug' => 'insa-pos',
+                'category' => 'Retail Operations',
+                'description' => "In-store POS fully integrated with DIY-Biz-Rewards for member-linked checkout.\n\n- Scan member QR or barcode, or enter member number before purchase\n- Tag every sale to the member so it records in DIY-Biz-Rewards app and web\n- Real-time sync between register and loyalty account\n- Cashier-friendly workflows for high-volume retail lanes",
+                'logo_path' => 'logos/insapos-system.svg',
+                'download_link' => '#insa-pos',
+                'status' => AppItem::STATUS_ACTIVE,
+            ],
+            [
+                'name' => 'ePayPlus',
+                'slug' => 'epayplus',
+                'category' => 'Loyalty & Engagement',
+                'description' => "Maya Business partner services built into DIY-Biz-Rewards — all-in-one from the member app.\n\n- Bills payment, cash-in, and load for all networks in one place\n- RFID and wallet services without leaving DIY-Biz-Rewards\n- Fully integrated with member balances and transaction history\n- Secure Maya Business-backed financial rails",
+                'logo_path' => 'logos/epayplus.svg',
+                'download_link' => '#epayplus',
                 'status' => AppItem::STATUS_ACTIVE,
             ],
             [

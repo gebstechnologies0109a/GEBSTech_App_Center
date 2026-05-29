@@ -9,17 +9,10 @@ class AppCenterController extends Controller
 {
     public function index(): View
     {
-        $appsByCategory = AppItem::query()
-            ->listed()
-            ->get()
-            ->groupBy('category');
-
-        $futureApps = AppItem::query()->future()->get();
+        $apps = AppItem::where('status', 'active')->get();
 
         return view('app-center.index', [
-            'appsByCategory' => $appsByCategory,
-            'futureApps' => $futureApps,
-            'totalApps' => $appsByCategory->flatten()->count(),
+            'apps' => $apps,
         ]);
     }
 

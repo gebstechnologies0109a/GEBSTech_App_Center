@@ -139,7 +139,7 @@ body.gebs-app-center {
 }
 
 .gebs-hero--banner {
-    padding: 3rem 0 2rem;
+    padding: 2rem 0 1.25rem;
     overflow: hidden;
 }
 
@@ -236,7 +236,7 @@ body.gebs-app-center {
 
 /* Main */
 .gebs-main {
-    padding: 0.5rem 0 2rem;
+    padding: 0.5rem 0 1.5rem;
 }
 
 /* Categories */
@@ -310,20 +310,52 @@ body.gebs-app-center {
     padding-bottom: 2.5rem;
 }
 
+.row {
+    display: grid;
+    gap: 1rem;
+}
+
+.row.row-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.row.g-3 {
+    gap: 1rem;
+}
+
+.col {
+    display: flex;
+}
+
+@media (min-width: 768px) {
+    .row.row-cols-md-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
 .gebs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.35rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .gebs-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 /* App cards */
 .gebs-tile {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
     text-decoration: none;
     color: inherit;
+    text-align: center;
+    width: 100%;
     transition:
         transform 0.3s var(--gebs-ease),
         box-shadow 0.3s var(--gebs-ease),
@@ -331,25 +363,26 @@ body.gebs-app-center {
 }
 
 .gebs-tile:hover {
-    transform: translateY(-8px) scale(1.01);
+    transform: translateY(-6px) scale(1.01);
     box-shadow: var(--gebs-shadow-hover);
     border-color: rgba(201, 162, 39, 0.5);
 }
 
 .gebs-tile__logo-wrap {
-    width: 5rem;
-    height: 5rem;
+    width: 3.5rem;
+    height: 3.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--gebs-radius-sm);
     background: rgba(15, 28, 46, 0.45);
     border: 1px solid rgba(34, 211, 238, 0.2);
+    margin-bottom: 0.25rem;
 }
 
 .gebs-tile__logo {
-    width: 80px;
-    height: 80px;
+    height: 40px;
+    width: auto;
     object-fit: contain;
     image-rendering: -webkit-optimize-contrast;
 }
@@ -365,22 +398,13 @@ body.gebs-app-center {
     font-size: 1.5rem;
 }
 
-.gebs-tile__category {
-    display: inline-block;
-    margin-bottom: 0.35rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--gebs-cyan);
-}
-
 .gebs-tile__title {
-    margin: 0 0 0.35rem;
+    margin: 0;
     font-family: var(--gebs-font-display);
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--gebs-white);
+    line-height: 1.3;
 }
 
 .gebs-tile--future {
@@ -391,27 +415,21 @@ body.gebs-app-center {
     border-color: rgba(201, 162, 39, 0.45);
 }
 
-.gebs-grid--future .gebs-tile__cta {
-    color: var(--gebs-gold-soft);
-}
-
-.gebs-tile__desc {
-    margin: 0;
-    font-size: 0.92rem;
+.text-muted {
     color: var(--gebs-text-muted);
-    line-height: 1.5;
 }
 
-.gebs-tile__cta {
-    margin-top: auto;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--gebs-cyan);
-    transition: color 0.2s var(--gebs-ease);
+.small {
+    font-size: 0.78rem;
+    line-height: 1.4;
 }
 
-.gebs-tile:hover .gebs-tile__cta {
-    color: var(--gebs-gold-soft);
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.gebs-tile .text-muted {
+    margin: 0;
 }
 
 /* Detail header */
@@ -423,8 +441,8 @@ body.gebs-app-center {
 }
 
 .gebs-detail-header__logo {
-    width: 7.5rem;
-    height: 7.5rem;
+    width: 6.5rem;
+    height: 6.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -433,8 +451,8 @@ body.gebs-app-center {
 }
 
 .gebs-detail-header__logo img {
-    width: 120px;
-    height: 120px;
+    height: 80px;
+    width: auto;
     object-fit: contain;
 }
 
@@ -561,12 +579,6 @@ body.gebs-app-center {
     font-size: 1rem;
 }
 
-.gebs-detail-cta {
-    display: flex;
-    justify-content: center;
-    padding-top: 0.5rem;
-}
-
 .gebs-empty {
     padding: 2.5rem;
     text-align: center;
@@ -600,21 +612,37 @@ body.gebs-app-center {
 /* Responsive */
 @media (max-width: 640px) {
     .gebs-hero--banner {
-        padding: 2rem 0 1.25rem;
+        padding: 1.5rem 0 1rem;
     }
 
-    .gebs-grid {
-        grid-template-columns: 1fr;
+    .gebs-hero__title {
+        font-size: 1.6rem;
+    }
+
+    .gebs-hero__subtitle {
+        font-size: 0.9rem;
     }
 
     .gebs-detail-header__logo {
-        width: 6rem;
-        height: 6rem;
+        width: 5rem;
+        height: 5rem;
     }
 
     .gebs-detail-header__logo img {
-        width: 96px;
-        height: 96px;
+        height: 64px;
+        width: auto;
+    }
+
+    .gebs-tile {
+        padding: 0.75rem;
+    }
+
+    .gebs-tile__title {
+        font-size: 0.85rem;
+    }
+
+    .small {
+        font-size: 0.7rem;
     }
 }
 

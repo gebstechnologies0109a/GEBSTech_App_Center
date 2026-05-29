@@ -10,7 +10,7 @@
             <div class="gebs-detail-header">
                 <div class="gebs-detail-header__logo gebs-glass-card">
                     @if ($app->logoUrl())
-                        <img src="{{ $app->logoUrl() }}" alt="{{ $app->name }} logo" width="120" height="120">
+                        <img src="{{ $app->logoUrl() }}" alt="{{ $app->name }} logo" height="80">
                     @else
                         <span class="gebs-tile__initials gebs-tile__initials--lg">{{ strtoupper(substr($app->name, 0, 2)) }}</span>
                     @endif
@@ -24,13 +24,6 @@
                     </div>
                     <h1 class="gebs-hero__title gebs-hero__title--sm">{{ $app->name }}</h1>
                     <p class="gebs-hero__subtitle gebs-hero__subtitle--left">{{ $app->descriptionSummary() }}</p>
-                    <a
-                        href="{{ $app->downloadUrl() }}"
-                        class="gebs-btn gebs-btn--gold"
-                        @if ($app->isExternalDownloadLink()) target="_blank" rel="noopener noreferrer" @endif
-                    >
-                        Download / Learn More
-                    </a>
                 </div>
             </div>
         </div>
@@ -55,16 +48,6 @@
                     </ul>
                 </article>
             @endif
-
-            <div class="gebs-detail-cta">
-                <a
-                    href="{{ $app->downloadUrl() }}"
-                    class="gebs-btn gebs-btn--gold gebs-btn--lg"
-                    @if ($app->isExternalDownloadLink()) target="_blank" rel="noopener noreferrer" @endif
-                >
-                    Download / Learn More
-                </a>
-            </div>
         </div>
     </main>
 @endsection

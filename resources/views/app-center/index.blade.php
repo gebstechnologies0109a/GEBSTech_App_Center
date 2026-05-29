@@ -12,49 +12,22 @@
             <p class="gebs-hero__subtitle">
                 A minimalist, premium launchpad for every GEBS system — discover, explore, and deploy with confidence.
             </p>
-            <div class="gebs-hero__stats">
-                <span class="gebs-hero__stat gebs-glass-card">{{ $totalApps }} live applications</span>
-                <span class="gebs-hero__stat gebs-glass-card">{{ $futureApps->count() }} coming soon</span>
-            </div>
         </div>
     </section>
 
     <main class="gebs-main">
         <div class="gebs-container">
-            @forelse ($appsByCategory as $category => $apps)
-                <section class="gebs-category" aria-labelledby="category-{{ \Illuminate\Support\Str::slug($category) }}">
-                    <header class="gebs-category__header">
-                        <h2 id="category-{{ \Illuminate\Support\Str::slug($category) }}" class="gebs-category__title">{{ $category }}</h2>
-                        <span class="gebs-category__count">{{ $apps->count() }} apps</span>
-                    </header>
-                    <div class="gebs-grid">
-                        @foreach ($apps as $app)
-                            @include('app-center.partials.tile', ['app' => $app])
-                        @endforeach
+            <div class="row row-cols-2 row-cols-md-4 g-3">
+                @forelse ($apps as $app)
+                    <div class="col">
+                        @include('app-center.partials.tile', ['app' => $app])
                     </div>
-                </section>
-            @empty
-                <div class="gebs-empty gebs-glass-card">
-                    <p>No live applications are available at the moment.</p>
-                </div>
-            @endforelse
-
-            @if ($futureApps->isNotEmpty())
-                <section class="gebs-category gebs-category--future" aria-labelledby="category-future">
-                    <header class="gebs-category__header">
-                        <h2 id="category-future" class="gebs-category__title">Future Apps</h2>
-                        <span class="gebs-category__count gebs-badge gebs-badge--soon">Coming soon</span>
-                    </header>
-                    <p class="gebs-category__intro">
-                        Upcoming GEBS Technologies products in active development. Check back for launch details.
-                    </p>
-                    <div class="gebs-grid gebs-grid--future">
-                        @foreach ($futureApps as $app)
-                            @include('app-center.partials.tile', ['app' => $app, 'future' => true])
-                        @endforeach
+                @empty
+                    <div class="gebs-empty gebs-glass-card">
+                        <p>No applications are available at the moment.</p>
                     </div>
-                </section>
-            @endif
+                @endforelse
+            </div>
         </div>
     </main>
 @endsection

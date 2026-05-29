@@ -16,7 +16,7 @@ class AppCenterTest extends TestCase
             ->assertRedirect('/app-center');
     }
 
-    public function test_app_center_lists_active_apps_by_category(): void
+    public function test_app_center_lists_all_active_apps(): void
     {
         AppItem::query()->create([
             'name' => 'Test App',
@@ -34,20 +34,10 @@ class AppCenterTest extends TestCase
             'status' => AppItem::STATUS_INACTIVE,
         ]);
 
-        AppItem::query()->create([
-            'name' => 'Future App',
-            'slug' => 'future-app',
-            'category' => AppItem::CATEGORY_FUTURE,
-            'description' => 'Future product',
-            'status' => AppItem::STATUS_INACTIVE,
-        ]);
-
         $this->get('/app-center')
             ->assertOk()
             ->assertSee('Test App')
-            ->assertSee('Retail Operations')
-            ->assertSee('Future Apps')
-            ->assertSee('Future App')
+            ->assertSee('Summary line.')
             ->assertDontSee('Hidden');
     }
 
@@ -66,7 +56,7 @@ class AppCenterTest extends TestCase
             ->assertOk()
             ->assertSee('Demo App')
             ->assertSee('Feature one')
-            ->assertSee('Download / Learn More');
+            ->assertDontSee('Download / Learn More');
     }
 
     public function test_future_app_detail_is_accessible(): void
