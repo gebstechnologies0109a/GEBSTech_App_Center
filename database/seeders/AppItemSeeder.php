@@ -40,12 +40,12 @@ class AppItemSeeder extends Seeder
                 'status' => AppItem::STATUS_ACTIVE,
             ],
             [
-                'name' => 'INSA POS',
+                'name' => 'INSA POS v3',
                 'slug' => 'insa-pos',
                 'category' => 'Retail Operations',
-                'description' => "In-store POS fully integrated with DIY-Biz-Rewards for member-linked checkout.\n\n- Scan member QR or barcode, or enter member number before purchase\n- Tag every sale to the member so it records in DIY-Biz-Rewards app and web\n- Real-time sync between register and loyalty account\n- Cashier-friendly workflows for high-volume retail lanes",
-                'logo_path' => 'logos/insapos-system.svg',
-                'download_link' => '#insa-pos',
+                'description' => "INSAPOS v3.0.47 — in-store POS fully integrated with DIY-Biz-Rewards for member-linked checkout.\n\n- Disk-backed catalog, delta sync, and offline-first Android shell\n- Scan member QR or barcode, or enter member number before purchase\n- Tag every sale to the member so it records in DIY-Biz-Rewards app and web\n- Real-time sync between register and loyalty account\n- Cashier-friendly workflows for high-volume retail lanes",
+                'logo_path' => 'logos/insapos.png',
+                'download_link' => 'https://github.com/gebstechnologies0109a/insa-pos-rewards/releases/download/insapos-v3.0.47/INSAPOS-3.0.47.apk',
                 'status' => AppItem::STATUS_ACTIVE,
             ],
             [
